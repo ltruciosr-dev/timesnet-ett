@@ -140,6 +140,9 @@ class ETTDataset(Dataset):
             seq_x: Input sequence [seq_len, features]
             seq_y: Target sequence [pred_len, features]
             seq_x_mark: Input time features [seq_len, time_features]
+
+        Note: TimesNet encoder-only uses ONLY input time features for embedding.
+        The model learns to predict future values without future time features.
         """
         s_begin = index
         s_end = s_begin + self.seq_len
@@ -148,7 +151,7 @@ class ETTDataset(Dataset):
 
         seq_x = self.data_x[s_begin:s_end]
         seq_y = self.data_y[y_begin:y_end]
-        seq_x_mark = self.data_stamp[s_begin:s_end]
+        seq_x_mark = self.data_stamp[s_begin:s_end]  # Only input time features
 
         return seq_x, seq_y, seq_x_mark
 
